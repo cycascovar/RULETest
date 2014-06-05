@@ -85,7 +85,7 @@
               <Component id="jRBPregunta2Op2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jRBPregunta2Op3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="76" max="32767" attributes="0"/>
+              <EmptySpace pref="80" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="BCancel" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
                   <Component id="BAcep" alignment="3" min="-2" max="-2" attributes="0"/>

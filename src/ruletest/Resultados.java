@@ -4,6 +4,8 @@
  */
 package ruletest;
 
+import java.sql.*;
+
 /**
  *
  * @author Christian
@@ -17,6 +19,20 @@ public class Resultados extends javax.swing.JFrame {
     public Resultados() {
         initComponents();
     }
+    
+    Principal objP;
+    //TipoVFrame vFrame = new TipoVFrame(objP);
+    TipoVFrame vFrame;
+    ConexionSQL Conexion = new ConexionSQL();
+    
+    static Connection conn = null;
+    static Statement st = null;
+    static ResultSet rs = null; 
+    
+    public String modelo = "";
+    
+    public void setModelo(String _modelo){modelo = _modelo;}
+    public String getModelo(){return modelo;}
     
   
     
@@ -33,21 +49,28 @@ public class Resultados extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
+        jCBMP3 = new javax.swing.JCheckBox();
+        jCBMSD = new javax.swing.JCheckBox();
+        jCBB = new javax.swing.JCheckBox();
+        jCBWifi = new javax.swing.JCheckBox();
+        jCBMMS = new javax.swing.JCheckBox();
+        jCBAndroid = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
+        jCBWin = new javax.swing.JCheckBox();
+        jCBIos = new javax.swing.JCheckBox();
         jLMarca = new javax.swing.JLabel();
         jLModelo = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        jCBSMS = new javax.swing.JCheckBox();
+        jCBPropio = new javax.swing.JCheckBox();
+        jCBCamara = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Marca");
@@ -58,33 +81,37 @@ public class Resultados extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Tecnologías");
 
-        jCheckBox1.setText("MP3");
+        jCBMP3.setText("MP3");
 
-        jCheckBox2.setText("Micro SD incluida");
+        jCBMSD.setText("Micro SD incluida");
 
-        jCheckBox3.setText("Bluetooth");
+        jCBB.setText("Bluetooth");
 
-        jCheckBox4.setText("Wi-fi");
+        jCBWifi.setText("Wi-fi");
 
-        jCheckBox6.setText("Mensajes multimedia (MMS)");
+        jCBMMS.setText("Mensajes multimedia (MMS)");
 
-        jCheckBox7.setText("Android");
+        jCBAndroid.setText("Android");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Sistemas operativos");
 
-        jCheckBox8.setText("Windows");
+        jCBWin.setText("Windows Phone");
 
-        jCheckBox9.setText("iOS");
+        jCBIos.setText("iOS");
 
-        jLMarca.setText("jLabel5");
+        jLMarca.setText("$marca");
 
-        jLModelo.setText("jLabel5");
+        jLModelo.setText("$modelo");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Los datos del equipo recomendado son los siguientes:");
 
-        jCheckBox5.setText("Mensajes de texto (SMS)");
+        jCBSMS.setText("Mensajes de texto (SMS)");
+
+        jCBPropio.setText("Propio/Otro");
+
+        jCBCamara.setText("Camara");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,23 +131,25 @@ public class Resultados extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLMarca))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jCheckBox7)
-                            .addGap(16, 16, 16)
-                            .addComponent(jCheckBox8)
-                            .addGap(18, 18, 18)
-                            .addComponent(jCheckBox9))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jCheckBox2)
-                                .addComponent(jCheckBox1)
-                                .addComponent(jCheckBox3)
-                                .addComponent(jCheckBox4))
-                            .addGap(14, 14, 14)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jCheckBox6)
-                                .addComponent(jCheckBox5)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCBAndroid)
+                        .addGap(16, 16, 16)
+                        .addComponent(jCBWin)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCBIos)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCBPropio))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCBMSD)
+                            .addComponent(jCBMP3)
+                            .addComponent(jCBB)
+                            .addComponent(jCBWifi))
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCBMMS)
+                            .addComponent(jCBSMS)
+                            .addComponent(jCBCamara))))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -140,43 +169,100 @@ public class Resultados extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox5))
+                    .addComponent(jCBMP3)
+                    .addComponent(jCBSMS))
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox6))
-                .addGap(7, 7, 7)
-                .addComponent(jCheckBox3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox4)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel4)
+                    .addComponent(jCBMSD)
+                    .addComponent(jCBMMS))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jCBB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCBWifi)
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBCamara)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox7)
-                    .addComponent(jCheckBox8)
-                    .addComponent(jCheckBox9))
+                    .addComponent(jCBAndroid)
+                    .addComponent(jCBWin)
+                    .addComponent(jCBIos)
+                    .addComponent(jCBPropio))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.setResizable(false);
+        
+        System.out.println("vFrame.getPhone() --->"+getModelo());
+        
+        try {
+            conn=Conexion.Enlace(conn);
+            //rs = Conexion.getAllFeatures(st, vFrame.tipoV);
+            rs = Conexion.getAllFeatures(st, "IPHONE 4S 64GB");
+            while (rs.next()) {
+                //jLMarca.setText(vFrame.tipoV);                
+                jLMarca.setText(rs.getString("marca"));
+                jLModelo.setText(rs.getString("modelo"));
+           // caracteristicas
+                if (rs.getInt("mp3") == 1) 
+                    jCBMP3.setSelected(true);
+                
+                if (rs.getInt("SD") == 1)
+                    jCBMSD.setSelected(true);
+                if (rs.getInt("camara")== 1)
+                    jCBCamara.setSelected(true);
+                if (rs.getInt("bluetooth")== 1)
+                    jCBB.setSelected(true);
+                if (rs.getInt("wifi")== 1)
+                    jCBWifi.setSelected(true);
+                if (rs.getInt("mms")== 1)
+                    jCBMMS.setSelected(true);
+                if (rs.getInt("sms")== 1)
+                    jCBSMS.setSelected(true);
+                
+           //sistemas operativos           
+                if (rs.getInt("android")== 1)
+                    jCBAndroid.setSelected(true);
+                if (rs.getInt("ios")== 1)
+                    jCBIos.setSelected(true);
+                if (rs.getInt("windows_phone")== 1)
+                    jCBWin.setSelected(true);
+                if (rs.getInt("windows_phone")== 1 && 
+                        rs.getInt("android")== 1 &&
+                        rs.getInt("ios")== 1)
+                    jCBPropio.setSelected(true);
+            }
+        } catch(SQLException e){
+    
+        }        
+        
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JCheckBox jCBAndroid;
+    private javax.swing.JCheckBox jCBB;
+    private javax.swing.JCheckBox jCBCamara;
+    private javax.swing.JCheckBox jCBIos;
+    private javax.swing.JCheckBox jCBMMS;
+    private javax.swing.JCheckBox jCBMP3;
+    private javax.swing.JCheckBox jCBMSD;
+    private javax.swing.JCheckBox jCBPropio;
+    private javax.swing.JCheckBox jCBSMS;
+    private javax.swing.JCheckBox jCBWifi;
+    private javax.swing.JCheckBox jCBWin;
     private javax.swing.JLabel jLMarca;
     private javax.swing.JLabel jLModelo;
     private javax.swing.JLabel jLabel1;

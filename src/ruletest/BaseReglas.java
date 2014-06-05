@@ -162,17 +162,17 @@ public class BaseReglas {
         Rule LAN7 = new Rule(br, "LANIX",
                         new Clause[]{new Clause(PrecioCel, igual, "1000"), //p
                         new Clause(Motivo, igual, "intermedio")},     //p
-                        new Clause(TipoCel, igual, "HUAWEI U8185")); //c
+                        new Clause(TipoCel, igual, "S100")); //c
         
         Rule LAN8 = new Rule(br, "LANIX",
                         new Clause[]{new Clause(PrecioCel, mayor, "850"),
                         new Clause(Motivo, igual, "intermedio")}, 
-                        new Clause(TipoCel, igual, "HUAWEI U8185"));        
+                        new Clause(TipoCel, igual, "S100"));        
         
         Rule LAN9 = new Rule(br, "LANIX",
-                        new Clause[]{new Clause(PrecioCel, menor, "1100"),
+                        new Clause[]{new Clause(PrecioCel, menor, "1500"),
                         new Clause(Motivo, igual, "intermedio")}, 
-                        new Clause(TipoCel, igual, "HUAWEI U8185"));         
+                        new Clause(TipoCel, igual, "S100"));         
 
 /*Equipos mas caros de 2000
  */        
@@ -279,16 +279,16 @@ public class BaseReglas {
         Rule APP1 = new Rule(br, "APPLE",
                         new Clause[]{new Clause(PrecioCel, mayor, "7600"),
                         new Clause(Motivo, igual, "superior")}, 
-                        new Clause(TipoCel, igual, "MOTO X XT1058"));        
+                        new Clause(TipoCel, igual, "IPHONE 4S 64GB"));        
         
         Rule APP2 = new Rule(br, "APPLE",
                         new Clause[]{new Clause(PrecioCel, mayor, "10000"),
                         new Clause(Motivo, igual, "superior")}, 
-                        new Clause(TipoCel, igual, "XT1032 MOTO G NEGRO 16 GB"));
+                        new Clause(TipoCel, igual, "IPHONE 4S 64GB"));
         
         Rule APP3 = new Rule(br, "APPLE",
                         new Clause[]{new Clause(PrecioCel, menor, "20000"),
                         new Clause(Motivo, igual, "superior")}, 
-                        new Clause(TipoCel, igual, "XT1032 MOTO G NEGRO 16 GB"));        
+                        new Clause(TipoCel, igual, "IPHONE 4S 64GB"));        
     }
 }

@@ -27,6 +27,8 @@ public class Principal extends javax.swing.JFrame
         initComponents();
         centrarPantalla(this);
     }
+    
+    //ConexionSQL Conexion = new ConexionSQL();
     ConexionSQL Conexion = new ConexionSQL();
     static Connection conn = null;
     static Statement st = null;
@@ -225,6 +227,7 @@ public class Principal extends javax.swing.JFrame
             while (rs.next()) {
                 // jLTotal.setText(rs.getString(total));
                 jLTotal.setText(rs.getString("total"));
+                System.out.println("total: "+jLTotal.getText());
             }
             
         }

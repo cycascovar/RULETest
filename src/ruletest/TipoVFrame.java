@@ -16,10 +16,11 @@ public class TipoVFrame extends javax.swing.JInternalFrame
 
     Principal objP;
     String Numr, Motor;
-    public String tipoV="";
     
+    public String tipoV="";    
     public String uso;
     public String Precio_cel;
+    Resultados results = new Resultados();
 
     /** Creates new form TipoVFrame */
     public TipoVFrame(Principal objP)
@@ -28,17 +29,13 @@ public class TipoVFrame extends javax.swing.JInternalFrame
         initComponents();
     }
     
-    public void setUse(String uso){
-        this.uso = uso;
-    }
+    public void setUse(String uso){ this.uso = uso; }  
+    public void setInvestment(String Precio_cel){ this.Precio_cel = Precio_cel; }    
+    public void setPhone(String tipoV){ this.tipoV = tipoV; }
     
-    public void setInvestment(String Precio_cel){
-        this.Precio_cel = Precio_cel;
-    }
-    
-    public void setPhone(String tipoV){
-        this.tipoV = tipoV;        
-    }
+    public String getUse(){return uso;}
+    public String getInvestment(){return Precio_cel;}
+    public String getPhone(){return tipoV;}
     
 
     /** This method is called from within the constructor to
@@ -187,17 +184,22 @@ public class TipoVFrame extends javax.swing.JInternalFrame
         Precio_cel = Precio.getText();
         System.out.println("Resultado ----> " + Precio_cel);
         tipoV = objP.objBR.getTipoCel(Precio_cel, uso);
+        setInvestment(Precio_cel);
         System.out.println("Resultado ----> " + tipoV);
+        setPhone(tipoV); //el tipoV se asigna a la variable telefono de la clase ConexionSQL.
+        results.setModelo(tipoV);
         if (tipoV==null)
         {
             JOptionPane.showMessageDialog(this, "Ocurrió un error, ¿podría ingresar datos diferentes?", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else
         {
+            Resultados res = new Resultados();
             JOptionPane.showMessageDialog(this, "El tipo de celular que le conviene de acuerdo al presupuesto, es el " + tipoV);
-            //objP.lanzaFrame(tipoV);
-            this.setVisible(false);
-            new Resultados().setVisible(true);
+            //objP.lanzaFrame(tipoV);            
+            System.out.println("getPhone() ->>"+getPhone());
+            this.setVisible(false);            
+            res.setVisible(true);
         }        
         
     }//GEN-LAST:event_BAcepActionPerformed

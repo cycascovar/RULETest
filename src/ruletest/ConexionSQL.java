@@ -45,6 +45,13 @@ public class ConexionSQL {
         rs = st.executeQuery("SELECT COUNT(*) AS total FROM v_equipos_caracteristicas");
         return rs;
     }
+     
+     public static ResultSet getAllFeatures(Statement st, String modelo) throws SQLException{
+         String query;
+         st = sta(st);         
+         rs = st.executeQuery("SELECT modelo, marca, precio, mp3, sd_card as SD, camara, bluetooth, wifi, mms, sms, android, windows_phone, ios FROM v_equipos_caracteristicas WHERE modelo = '"+modelo+"'");
+         return rs;
+     }
     
 }
 

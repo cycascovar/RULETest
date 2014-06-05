@@ -3,6 +3,7 @@ package ruletest;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import java.sql.*;
 
 /*
  * Principal.java
@@ -18,7 +19,7 @@ import javax.swing.JInternalFrame;
 public class Principal extends javax.swing.JFrame
 {
 
-    public BaseReglas objBR = new BaseReglas();
+    public BaseReglas objBR = new BaseReglas();       
 
     /** Creates new form Principal */
     public Principal()
@@ -26,6 +27,10 @@ public class Principal extends javax.swing.JFrame
         initComponents();
         centrarPantalla(this);
     }
+    ConexionSQL Conexion = new ConexionSQL();
+    static Connection conn = null;
+    static Statement st = null;
+    static ResultSet rs = null;
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -39,34 +44,86 @@ public class Principal extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLTotal = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema recomendador de celulares: Demo");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jDP1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\UAEH\\Inteligencia Artificial\\Proyecto final\\recommender\\img\\dude.png")); // NOI18N
-        jLabel1.setBounds(10, 100, 381, 311);
+        jLabel1.setBounds(-20, 100, 310, 311);
         jDP1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel2.setText("Sistema de recomendación de celulares");
-        jLabel2.setBounds(10, 20, 420, 29);
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Recomiéndame 1.0");
+        jLabel2.setBounds(490, 70, 170, 17);
         jDP1.add(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jToggleButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jToggleButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Christian\\Documents\\GitHub\\RULETest\\img\\recommendd.png")); // NOI18N
-        jToggleButton1.setText("Recomiendame  un celular");
+        jToggleButton1.setText("Comenzar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        jToggleButton1.setBounds(280, 300, 380, 110);
+        jToggleButton1.setBounds(280, 290, 380, 110);
         jDP1.add(jToggleButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel3.setText("Sistema de recomendación de celulares");
+        jLabel3.setBounds(190, 30, 500, 29);
+        jDP1.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("¡Hola!");
+        jLabel4.setBounds(300, 100, 34, 17);
+        jDP1.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("Da clic en el botón \"Comenzar\" para comenzar la prueba de recomendación.");
+        jLabel6.setBounds(280, 250, 440, 15);
+        jDP1.add(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("Bienvenido al sistema de recomendación de celulares \"Recomiéndame 1.0\"");
+        jLabel7.setBounds(290, 170, 430, 15);
+        jDP1.add(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("¿No sabes que equipo celular comprar y el encargado de la tienda no te ayuda?");
+        jLabel8.setBounds(290, 190, 450, 15);
+        jDP1.add(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLTotal.setText("                  ");
+        jLTotal.setBounds(520, 100, 60, 14);
+        jDP1.add(jLTotal, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel10.setText("Esta sucursal cuenta con");
+        jLabel10.setBounds(370, 100, 150, 14);
+        jDP1.add(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jLabel11.setText("equipos celulares");
+        jLabel11.setBounds(540, 100, 150, 14);
+        jDP1.add(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu2.setText("Recomendación");
 
@@ -80,13 +137,33 @@ public class Principal extends javax.swing.JFrame
 
         jMenuBar1.add(jMenu2);
 
+        jMenu1.setText("Ayuda");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Acerca de");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDP1, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jDP1, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,6 +201,38 @@ public class Principal extends javax.swing.JFrame
         jDP1.add(frame);
         centrarPantallaInterna(frame);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new AcercaDe().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+/*
+ *     static Connection conn = null;
+    static Statement st = null;
+    static ResultSet rs = null;
+ */    
+        try {
+            conn=Conexion.Enlace(conn);
+            rs = Conexion.getAllPhones(st);
+            while (rs.next()) {
+                // jLTotal.setText(rs.getString(total));
+                jLTotal.setText(rs.getString("total"));
+            }
+            
+        }
+        catch(SQLException e){
+            
+        }               
+        this.setResizable(false);
+    }//GEN-LAST:event_formWindowOpened
 
     public void centrarPantalla(JFrame ventana)
     {
@@ -173,10 +282,20 @@ public class Principal extends javax.swing.JFrame
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDP1;
+    private javax.swing.JLabel jLTotal;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables

@@ -10,7 +10,7 @@ import javax.swing.*;
  * @author christian
  */
 public class ConexionSQL {
-     static Connection conn=null;
+    static Connection conn=null;
     static Statement st=null;
     static ResultSet rs=null;
 
@@ -40,11 +40,11 @@ public class ConexionSQL {
         return st;
     }
     
-    /* public static Statement getAllPhones(Statement st) throws SQLException{
+     public static ResultSet getAllPhones(Statement st) throws SQLException{ //obiene la cantidad de telefonos existentes
         st = sta(st);
         rs = st.executeQuery("SELECT COUNT(*) AS total FROM v_equipos_caracteristicas");
         return rs;
-    } */
+    }
     
 }
 

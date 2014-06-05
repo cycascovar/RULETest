@@ -16,10 +16,10 @@ public class TipoVFrame extends javax.swing.JInternalFrame
 
     Principal objP;
     String Numr, Motor;
-    String tipoV="";
+    public String tipoV="";
     
-    String uso;
-    String Precio_cel;
+    public String uso;
+    public String Precio_cel;
 
     /** Creates new form TipoVFrame */
     public TipoVFrame(Principal objP)
@@ -27,6 +27,19 @@ public class TipoVFrame extends javax.swing.JInternalFrame
         this.objP = objP;
         initComponents();
     }
+    
+    public void setUse(String uso){
+        this.uso = uso;
+    }
+    
+    public void setInvestment(String Precio_cel){
+        this.Precio_cel = Precio_cel;
+    }
+    
+    public void setPhone(String tipoV){
+        this.tipoV = tipoV;        
+    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -49,18 +62,20 @@ public class TipoVFrame extends javax.swing.JInternalFrame
         jRBPregunta2Op2 = new javax.swing.JRadioButton();
 
         setClosable(true);
-        setMaximizable(true);
         setTitle("Preguntas");
         setToolTipText("");
 
-        BAcep.setText("Aceptar");
+        BAcep.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BAcep.setIcon(new javax.swing.ImageIcon("C:\\Users\\christian\\Documents\\GitHub\\UAEH\\Inteligencia Artificial\\Proyecto final\\recommender\\img\\iconh_64.png")); // NOI18N
+        BAcep.setText("Recomiéndame");
         BAcep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BAcepActionPerformed(evt);
             }
         });
 
-        BCancel.setText("Cancelar");
+        BCancel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BCancel.setText("Salir");
         BCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BCancelActionPerformed(evt);
@@ -123,13 +138,12 @@ public class TipoVFrame extends javax.swing.JInternalFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRBPregunta2Op2)
                             .addComponent(jRBPregunta2Op1)
-                            .addComponent(jRBPregunta2Op3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(BAcep)
-                        .addGap(37, 37, 37)
-                        .addComponent(BCancel)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                            .addComponent(jRBPregunta2Op3)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BAcep, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,11 +164,11 @@ public class TipoVFrame extends javax.swing.JInternalFrame
                 .addComponent(jRBPregunta2Op2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRBPregunta2Op3)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BCancel)
+                    .addComponent(BCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BAcep))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -167,6 +181,9 @@ public class TipoVFrame extends javax.swing.JInternalFrame
 
     private void BAcepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAcepActionPerformed
         // TODO add your handling code here:
+        /*En 
+         * esta parte llamar a formulario Resultados y hacer calculos
+         */
         Precio_cel = Precio.getText();
         System.out.println("Resultado ----> " + Precio_cel);
         tipoV = objP.objBR.getTipoCel(Precio_cel, uso);
@@ -180,7 +197,8 @@ public class TipoVFrame extends javax.swing.JInternalFrame
             JOptionPane.showMessageDialog(this, "El tipo de celular que le conviene de acuerdo al presupuesto, es el " + tipoV);
             //objP.lanzaFrame(tipoV);
             this.setVisible(false);
-        }
+            new Resultados().setVisible(true);
+        }        
         
     }//GEN-LAST:event_BAcepActionPerformed
 
